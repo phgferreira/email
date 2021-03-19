@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin("localhost://43002")
+@CrossOrigin("http://10.7.0.15:43002")
 @RestController
 @RequestMapping("/email")
 public class EmailController {
@@ -46,7 +46,7 @@ public class EmailController {
 			MimeMessage msg = new MimeMessage(sessao);
 			msg.setFrom(new InternetAddress("intranet@hst.org.br"));
 			msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(body.get("recipient")));
-			//msg.setRecipients(Message.RecipientType.BCC, InternetAddress.parse("paulo.ferreira@hst.org.br"));
+			msg.setRecipients(Message.RecipientType.BCC, InternetAddress.parse("paulo.ferreira@hst.org.br"));
 			msg.setSubject(body.get("title"));
 			msg.setText(body.get("content"), "utf-8", "html");
 
@@ -55,7 +55,6 @@ public class EmailController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
 		return new ResponseEntity<String>(HttpStatus.OK);
 	}
 }
